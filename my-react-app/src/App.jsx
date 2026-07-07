@@ -1,125 +1,3 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
-
-function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
-
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
-}
-
-export default App
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
@@ -127,60 +5,91 @@ function App() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    // Dữ liệu giả lập khớp với ảnh bài tập yêu cầu
-    const mockData = [
-      { id: '1', name: 'John Doe', status: 'Active' }
-    ];
-    setData(mockData);
+    const fetchData = async () => {
+      try {
+        // Đã thêm nhiều tên và ID vào danh sách ở đây
+        const res = {
+          data: [
+            { id: '1', name: 'John Doe', status: 'Active' },
+            { id: '2', name: 'Jane Smith', status: 'Inactive' },
+            { id: '3', name: 'Alex Johnson', status: 'Active' },
+            { id: '4', name: 'Emily Brown', status: 'Pending' }
+          ]
+        };
+        setData(res.data);
+      } catch (error) {
+        console.error("Lỗi fetch API:", error);
+      }
+    };
+    fetchData();
   }, []);
 
   return (
-    <div className="d-flex flex-column min-vh-100">
+    <div className="d-flex flex-column min-vh-100 bg-white">
       
       {/* 1. HEADER */}
-      <nav className="navbar navbar-expand-lg navbar-light bg-light px-3">
-        <a className="navbar-brand fw-bold" href="#">MY APP</a>
-        <div className="collapse navbar-collapse">
-          <ul className="navbar-nav me-auto">
-            <li className="nav-item"><a className="nav-link" href="#">Home</a></li>
-            <li className="nav-item"><a className="nav-link" href="#">Link</a></li>
-            <li className="nav-item dropdown">
-              <a className="nav-link dropdown-toggle" href="#">Options</a>
-            </li>
-          </ul>
+      <nav className="navbar navbar-expand navbar-light bg-light px-4 border-bottom">
+        <span className="navbar-brand fw-bold text-dark me-4">MY APP</span>
+        <div className="navbar-nav">
+          <a className="nav-link text-secondary me-2" href="#home">Home</a>
+          <a className="nav-link text-secondary me-2" href="#link">Link</a>
+          <a className="nav-link text-secondary dropdown-toggle" href="#options">Options</a>
         </div>
       </nav>
 
       {/* 2. BANNER */}
-      <div style={{ backgroundColor: '#cbe7e3', height: '200px', display: 'flex', alignItems: 'center' }}>
-        <h2 className="ms-4 text-white">{'<'}</h2>
+      <div 
+        className="position-relative w-100" 
+        style={{ 
+          backgroundImage: 'url("https://img.freepik.com/free-vector/abstract-surface-textures-white-micro-geometric-details_83282-3112.jpg")', 
+          backgroundColor: '#c4e5e1', 
+          backgroundBlendMode: 'multiply', 
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          height: '250px' 
+        }}
+      >
+        <span 
+          className="position-absolute text-white fw-light" 
+          style={{ left: '40px', top: '50%', transform: 'translateY(-50%)', fontSize: '3rem', cursor: 'pointer' }}
+        >
+          &#10094;
+        </span>
       </div>
 
-      {/* 3. CONTENT */}
-      <div className="container mt-4 flex-grow-1">
-        <table className="table table-bordered">
-          <thead className="table-light">
-            <tr>
-              <th>Name</th>
-              <th>ID</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.map((item) => (
-              <tr key={item.id}>
-                <td>{item.name}</td>
-                <td>{item.id}</td>
-                <td>{item.status}</td>
+      {/* 3. CONTENT (Hiển thị danh sách nhiều người) */}
+      <div className="container-fluid px-0 flex-grow-1">
+        <div className="table-responsive">
+          <table className="table table-bordered mb-0" style={{ borderColor: '#dee2e6' }}>
+            <thead className="table-light">
+              <tr>
+                <th className="fw-bold py-2 px-3 text-dark border-end" style={{ width: '45%' }}>Name</th>
+                <th className="fw-bold py-2 px-3 text-dark border-end" style={{ width: '15%' }}>ID</th>
+                <th className="fw-bold py-2 px-3 text-dark">Status</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {data.map((item) => (
+                <tr key={item.id} className="align-middle">
+                  <td className="py-2 px-3 border-end text-dark">{item.name}</td>
+                  <td className="py-2 px-3 border-end text-dark">{item.id}</td>
+                  <td className="py-2 px-3 text-dark">
+                    <span className={`badge ${item.status === 'Active' ? 'bg-success' : item.status === 'Inactive' ? 'bg-danger' : 'bg-warning'}`}>
+                      {item.status}
+                    </span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       {/* 4. FOOTER */}
-      <footer className="text-center py-3 bg-white border-top mt-auto">
-        <span>📍 Hanoi, August 2026</span>
+      <footer className="text-center py-3 bg-white border-top">
+        <span className="text-dark" style={{ fontSize: '0.9rem' }}>
+          &#127941; Hanoi, August 2026
+        </span>
       </footer>
 
     </div>
