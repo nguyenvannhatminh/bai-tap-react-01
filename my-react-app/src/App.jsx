@@ -1,94 +1,97 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 
 function App() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // Đã thêm nhiều tên và ID vào danh sách ở đây
-        const res = {
-          data: [
-            { id: '1', name: 'John Doe', status: 'Active' },
-            { id: '2', name: 'Jane Smith', status: 'Inactive' },
-            { id: '3', name: 'Alex Johnson', status: 'Active' },
-            { id: '4', name: 'Emily Brown', status: 'Pending' }
-          ]
-        };
-        setData(res.data);
-      } catch (error) {
-        console.error("Lỗi fetch API:", error);
-      }
+    // Dữ liệu mẫu
+    const res = {
+      data: [
+        { id: '1', name: 'John Doe', status: 'Active' },
+        { id: '2', name: 'Jane Smith', status: 'Inactive' },
+        { id: '3', name: 'Alex Johnson', status: 'Active' },
+        { id: '4', name: 'Emily Brown', status: 'Pending' }
+      ]
     };
-    fetchData();
+    setData(res.data);
   }, []);
 
   return (
-    <div className="d-flex flex-column min-vh-100 bg-white">
+    // Dùng w-100, m-0, p-0 để ép tràn 100% viền màn hình
+    <div className="d-flex flex-column min-vh-100 w-100 m-0 p-0 bg-light" style={{ overflowX: 'hidden' }}>
       
-      {/* 1. HEADER */}
-      <nav className="navbar navbar-expand navbar-light bg-light px-4 border-bottom">
-        <span className="navbar-brand fw-bold text-dark me-4">MY APP</span>
-        <div className="navbar-nav">
-          <a className="nav-link text-secondary me-2" href="#home">Home</a>
-          <a className="nav-link text-secondary me-2" href="#link">Link</a>
-          <a className="nav-link text-secondary dropdown-toggle" href="#options">Options</a>
+      {/* 1. HEADER: Tràn viền, viền dưới nhạt */}
+      <nav className="navbar navbar-expand-lg navbar-light bg-white px-5 py-3 border-bottom w-100">
+        <span className="navbar-brand fw-bolder text-dark fs-4 me-5">MY APP</span>
+        <div className="collapse navbar-collapse">
+          <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+            <li className="nav-item"><a className="nav-link active fw-medium" href="#home">Home</a></li>
+            <li className="nav-item"><a className="nav-link fw-medium text-secondary" href="#link">Link</a></li>
+            <li className="nav-item dropdown">
+              <a className="nav-link dropdown-toggle fw-medium text-secondary" href="#options">Options</a>
+            </li>
+          </ul>
         </div>
       </nav>
 
-      {/* 2. BANNER */}
+      {/* 2. BANNER: Gradient xanh ngọc mượt mà, full chiều rộng */}
       <div 
-        className="position-relative w-100" 
+        className="w-100 position-relative d-flex align-items-center" 
         style={{ 
-          backgroundImage: 'url("https://img.freepik.com/free-vector/abstract-surface-textures-white-micro-geometric-details_83282-3112.jpg")', 
-          backgroundColor: '#c4e5e1', 
-          backgroundBlendMode: 'multiply', 
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          height: '250px' 
+          background: 'linear-gradient(135deg, #a1dacd 0%, #dcf0ec 100%)', 
+          height: '280px' 
         }}
       >
         <span 
-          className="position-absolute text-white fw-light" 
-          style={{ left: '40px', top: '50%', transform: 'translateY(-50%)', fontSize: '3rem', cursor: 'pointer' }}
+          className="text-white ms-5 display-4 opacity-75" 
+          style={{ cursor: 'pointer', userSelect: 'none' }}
         >
           &#10094;
         </span>
       </div>
 
-      {/* 3. CONTENT (Hiển thị danh sách nhiều người) */}
-      <div className="container-fluid px-0 flex-grow-1">
-        <div className="table-responsive">
-          <table className="table table-bordered mb-0" style={{ borderColor: '#dee2e6' }}>
-            <thead className="table-light">
-              <tr>
-                <th className="fw-bold py-2 px-3 text-dark border-end" style={{ width: '45%' }}>Name</th>
-                <th className="fw-bold py-2 px-3 text-dark border-end" style={{ width: '15%' }}>ID</th>
-                <th className="fw-bold py-2 px-3 text-dark">Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {data.map((item) => (
-                <tr key={item.id} className="align-middle">
-                  <td className="py-2 px-3 border-end text-dark">{item.name}</td>
-                  <td className="py-2 px-3 border-end text-dark">{item.id}</td>
-                  <td className="py-2 px-3 text-dark">
-                    <span className={`badge ${item.status === 'Active' ? 'bg-success' : item.status === 'Inactive' ? 'bg-danger' : 'bg-warning'}`}>
-                      {item.status}
-                    </span>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+      {/* 3. CONTENT: Dùng container-fluid để rộng hết cỡ, bọc Table trong Card đổ bóng */}
+      <div className="container-fluid flex-grow-1 px-5 py-5 w-100">
+        <div className="card border-0 shadow-sm rounded-4 overflow-hidden w-100">
+          <div className="card-body p-0">
+            <div className="table-responsive">
+              <table className="table table-hover mb-0 text-center align-middle">
+                <thead className="table-light">
+                  <tr>
+                    <th className="py-3 text-start px-4 text-muted fw-semibold">Name</th>
+                    <th className="py-3 text-muted fw-semibold">ID</th>
+                    <th className="py-3 text-muted fw-semibold">Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {data.map((item) => (
+                    <tr key={item.id}>
+                      <td className="py-3 text-start px-4 fw-medium text-dark">{item.name}</td>
+                      <td className="py-3 text-secondary">{item.id}</td>
+                      <td className="py-3">
+                        <span 
+                          className={`badge rounded-pill px-3 py-2 fw-medium ${
+                            item.status === 'Active' ? 'bg-success bg-opacity-75' : 
+                            item.status === 'Inactive' ? 'bg-danger bg-opacity-75' : 
+                            'bg-warning text-dark bg-opacity-75'
+                          }`}
+                        >
+                          {item.status}
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* 4. FOOTER */}
-      <footer className="text-center py-3 bg-white border-top">
-        <span className="text-dark" style={{ fontSize: '0.9rem' }}>
-          &#127941; Hanoi, August 2026
+      {/* 4. FOOTER: Căn giữa, text nhạt */}
+      <footer className="text-center py-4 bg-white border-top w-100 mt-auto">
+        <span className="text-muted fw-medium" style={{ fontSize: '0.95rem' }}>
+          📍 Hanoi, August 2026
         </span>
       </footer>
 
